@@ -79,8 +79,7 @@ class TestQuaternion(unittest.TestCase):
 
     def test_multiplication_with_scalar(self):
         q1 = Quaternion(1, -2, 3, 4)
-        #self.assertEqual(q1 * 5, Quaternion(5, -10, 15, 20))
-        self.assertEqual(q1 * 5, Quaternion(5, -10, 100, 20))
+        self.assertEqual(q1 * 5, Quaternion(5, -10, 15, 20))
 
     def test_multiplication_with_scalar_right_side(self):
         q1 = Quaternion(1, -2, 3, 4)
