@@ -11,6 +11,7 @@ class TestQuaternion(unittest.TestCase):
 
     def test_input_length_not_four_raises_value_error_one_value(self):
         with self.assertRaises(ValueError):
+            print("Test print")
             q = Quaternion(3)
 
     def test_input_is_ndarray_is_valid(self):
@@ -42,7 +43,9 @@ class TestQuaternion(unittest.TestCase):
         q1 = Quaternion(-1, 2, -3, 4)
         q2 = Quaternion(-1, 2, -3, 4)
 
-        self.assertTrue(q1 == q2)
+        print("Test failed test")
+        #self.assertTrue(q1 == q2)
+        self.assertTrue(q1 != q2)
 
     def test_equality_one_different(self):
         q1 = Quaternion(-1, 2, -3, 4)
