@@ -2,7 +2,7 @@ import numpy as np
 
 class Quaternion:
     """
-    Quaternion Class.
+    Quaternion Class. Provides a simple and efficient way to work with quaternions.
 
     There are three ways to initialize a quaternion.
     1) With four distinct values
@@ -19,21 +19,26 @@ class Quaternion:
     """
     def __init__(self, *values):
 
+        # switch according to the initialization type
         if len(values) == 4:
+            # type 1 initialization
             self.values = list(values)
             return
         elif len(values) == 1:
+            # type 2 initialization
             if type(values[0]) in [tuple, list, np.ndarray]:
-                if len(values[0])==4:
+                if len(values[0]) == 4:
                     self.values = list(values[0])
                     return
         elif len(values) == 2:
+            # type 3 initialization
             if type(values[0]) in [float, int]\
-                and type(values[1]) in [tuple, list, np.ndarray]:
+               and type(values[1]) in [tuple, list, np.ndarray]:
                 if len(values[1]) == 3:
                     self.values = list([values[0]] + list(values[1]))
                     return
 
+        # raise ValueError in case initialization parameters were not in correct format
         raise ValueError("Quaternion takes exactly 4 values.")
 
     def __mul__(self, other):
@@ -55,7 +60,6 @@ class Quaternion:
             # handle scalar multiplication
             return Quaternion([val * other for val in self.values])
 
-
     def __rmul__(self, other):
         """
         Called when Quaternion is used in multiplication operation and
@@ -76,7 +80,7 @@ class Quaternion:
 
         else:
             # handle scalar addition
-            return  Quaternion([w0 + other, x0 + other, y0 + other, z0 + other])
+            return Quaternion([w0 + other, x0, y0, z0])
 
     def __sub__(self, other):
         """ Called when Quaternion is used in subtraction operation """
@@ -91,7 +95,7 @@ class Quaternion:
 
         else:
             # handle scalar subtraction
-            return  Quaternion([w0-other, x0-other, y0-other, z0-other])
+            return Quaternion([w0-other, x0, y0, z0])
 
     def __truediv__(self, other):
         """ Called when Quaternion is used in division operation """
@@ -104,10 +108,17 @@ class Quaternion:
     def __eq__(self, other):
         """ Called when Quaternion is used in equality check """
 
+        if type(other) != Quaternion:
+            raise ValueError("Equality check can only be performed on Quaternion and other Quaternion.")
+
         return self.values == other.values
 
     def __ne__(self, other):
         """ Called when Quaternion is used in inequality check """
+
+        if type(other) != Quaternion:
+            raise ValueError("Inequality check can only be performed on Quaternion and other Quaternion.")
+
         return self.values != other.values
 
     def __getitem__(self, item):
@@ -131,6 +142,7 @@ class Quaternion:
 
     @property
     def norm(self):
+        """ Returns norm of quaternion which is square root of the sum of its squared values. """
         return np.sqrt(np.sum(np.array(self.values) ** 2))
 
     @property
@@ -158,10 +170,7 @@ class Quaternion:
         :return: Euler angles in radians (roll, pitch, yaw)
         :rtype: tuple
         """
-        # w, x, y, z = self.values
-        # roll = np.arctan2(2*y*z - 2*w*x, 2*w**2 + 2*z**2 -1)
-        # pitch = -np.arcsin(2*x*z + 2*w*y)
-        # yaw = np.arctan2(2*x*y - 2*w*z, 2*w**2 + 2*x**2 - 1)
+
         q0, q1, q2, q3 = self.values
         roll = np.arctan2(2*(q0*q1 + q2*q3), 1 - 2*(q1**2.0 + q2**2.0))
         pitch = np.arcsin(2*(q0*q2 - q3*q1))
@@ -172,7 +181,7 @@ class Quaternion:
     @property
     def conj(self):
         """
-        Returns conjugated Quaternion. This Quaternion with inversed complex part.
+        Returns conjugated Quaternion, which is Quaternion with inversed complex part.
 
         :return: Conjugated quaternion
         :rtype: Quaternion
@@ -181,23 +190,33 @@ class Quaternion:
 
     @property
     def real(self):
+        """ Returns real part of quaternion. """
         return self.values[0]
 
     @property
     def imag(self):
+        """ Returns imaginary part of quaternion as a list. """
         return self.values[1:]
 
 def quaternion_from_euler(roll, pitch, yaw):
+    """
+    Returns a quaternion which corresponds to euler angles, roll, pitch and yaw.
+
+    :param roll: Euler roll angle in radians.
+    :type roll: float
+
+    :param pitch: Euler pitch angle in radians.
+    :type pitch: float
+
+    :param yaw: Euler yaw angle in radians.
+    :type yaw: float
+
+    :return: Quaternion, which corresponds input to euler angles.
+    :rtype: Quaternion
+    """
+
     q0 = Quaternion([np.cos(yaw/2), 0, 0, np.sin(yaw/2)])
     q1 = Quaternion([np.cos(roll/2), 0, np.sin(roll/2), 0])
     q2 = Quaternion([np.cos(pitch/2), np.sin(pitch/2), 0, 0])
 
     return q0*q1*q2
-
-if __name__ == '__main__':
-    q = Quaternion(0.7334, 0.0981, -0.6026, -0.299)
-    print(quaternion_from_euler(*list(np.array([140.98, 40.39, 73.5]) * np.pi / 180)))
-
-
-
-

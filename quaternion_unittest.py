@@ -91,7 +91,7 @@ class TestQuaternion(unittest.TestCase):
 
     def test_addition_with_scalar(self):
         q1 = Quaternion(1, -2, 3, 4)
-        self.assertEqual(q1 + 3, Quaternion(4, 1, 6, 7))
+        self.assertEqual(q1 + 3, Quaternion(4, -2, 3, 4))
 
     def test_addition_with_quaternion(self):
         q1 = Quaternion(1, -2, 3, 4)
@@ -100,7 +100,7 @@ class TestQuaternion(unittest.TestCase):
 
     def test_subtraction_with_scalar(self):
         q1 = Quaternion(1, -2, 3, 4)
-        self.assertEqual(q1 - 5, Quaternion(-4, -7, -2, -1))
+        self.assertEqual(q1 - 5, Quaternion(-4, -2, 3, 4))
 
     def test_subtraction_with_quaternion(self):
         q1 = Quaternion(1, -2, 3, 4)
