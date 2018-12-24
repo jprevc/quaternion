@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Quaternion:
     """
     Quaternion Class. Provides a simple and efficient way to work with quaternions.

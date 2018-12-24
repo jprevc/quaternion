@@ -1,1 +1,3 @@
-quaternion is a simple and efficient Python library for quaternion computations.
+# Quatertnion
+
+quaternion is a simple and efficient Python library for computations with quaternions.
