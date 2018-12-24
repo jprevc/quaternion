@@ -45,3 +45,15 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+quaterion.egg-info/top_level.txt
+quaterion.egg-info/requires.txt
+quaterion.egg-info/dependency_links.txt
+quaterion.egg-info/SOURCES.txt
+quaterion.egg-info/PKG-INFO
+dist/quaterion-1.0.tar.gz
+dist/quaterion-1.0-py3-none-any.whl
+build/lib/quaternion_unittest.py
+build/lib/quaternion/quaternion_unittest.py
+build/lib/quaternion/quaternion.py
+build/lib/quaternion/__init__.py
+build/lib/quaternion.py
